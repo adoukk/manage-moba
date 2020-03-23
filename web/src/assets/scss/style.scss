@@ -1,0 +1,196 @@
+@import './variables';
+// reset
+
+* {
+    /*加padding的时候不会把box撑大，而是内容向内挤压*/
+    box-sizing: border-box; 
+    outline: none;
+}
+
+html {
+    font-size: 13px;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.2em;
+    background: #f1f1f1;
+    -webkit-font-smoothing: antialiased; //字体变细
+}
+
+a {
+    color: #999;
+}
+
+p {
+    line-height: 1.5rem;
+}
+
+@each $colorKey, $color in $colors {
+    .text-#{$colorKey} {
+        color: $color;
+    }
+    .bg-#{$colorKey} {
+        background-color: $color;
+    }
+}
+
+// text-align
+@each $var in (left,center,right) {
+    .text-#{$var} {
+        text-align:#{$var} !important;
+    }
+}
+
+
+@each $sizeKey, $size in $font-sizes {
+    .fs-#{$sizeKey} {
+        font-size: $size * $base-font-size;
+    }
+}
+
+// text-flow
+.text-ellipsis {
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+// width height
+.w-100 {
+    width: 100%;
+}
+.h-100 {
+    height: 100%;
+}
+
+
+// flex
+.d-flex {
+    display: flex;
+}
+
+// 垂直
+.flex-column {
+    flex-direction: column;
+}
+// 换行
+.flex-wrap {
+    flex-wrap: wrap;
+}
+
+@each $key, $value in $flex-jc {
+    .jc-#{$key} {
+        justify-content: $value;
+    }
+}
+
+
+@each $key,$value in $flex-ai {
+    .ai-#{$key} {
+        align-items: $value;
+    }
+}
+
+.flex-1 {
+    flex: 1;//填充剩余空间
+}
+/*
+.flex-grow-1 {
+    flex-grow: 1;
+}
+*/
+// spacing
+
+@each $typeKey, $type in $spacing-types {
+    
+    //.m-1
+    @each $sizeKey, $size in $spacing-sizes {
+        
+        .#{$typeKey}-#{$sizeKey} {
+            #{$type}: $size * $spacing-base-size;
+        }
+    }
+
+    //.mx-1, my-1
+    @each $sizeKey, $size in $spacing-sizes {
+        
+        .#{$typeKey}x-#{$sizeKey} {
+            #{$type}-left: $size * $spacing-base-size;
+            #{$type}-right: $size * $spacing-base-size;
+        }
+        .#{$typeKey}y-#{$sizeKey} {
+            #{$type}-top: $size * $spacing-base-size;
+            #{$type}-bottom: $size * $spacing-base-size;
+        }
+    }
+
+    //.mt-1
+    @each $directionKey, $direction in $spacing-directions {
+        @each $sizeKey, $size in $spacing-sizes {
+            
+            .#{$typeKey}#{$directionKey}-#{$sizeKey} {
+                #{$type}-#{$direction}: $size * $spacing-base-size;
+            }
+        }
+    }
+    .#{$typeKey} {
+        #{$type}: 0
+    }
+}
+
+// button
+.btn {
+    border: none;
+    border-radius: 0.1538rem;
+    font-size: map-get($map: $font-sizes, $key: sm) * $base-font-size;
+    padding: 0.2rem 0.6rem;
+}
+
+// nav
+.nav {
+    display: flex;
+    
+    .nav-item {
+        border-bottom: 3px solid transparent;
+        padding-bottom: 0.2rem;
+        &.active { //表示上一层的本身  对齐
+            color: map-get($map: $colors, $key: 'primary');
+            border-bottom-color:map-get($map: $colors, $key: 'primary');
+        }
+        
+    }
+    &.nav-inverse{
+        .nav-item {
+            color: map-get($map: $colors, $key: 'white');  
+            &.active {
+                border-bottom-color:map-get($map: $colors, $key: 'white');
+            }     
+        }
+    }
+}
+
+
+// sprite
+.sprite {
+    background: url(../images/index.png) no-repeat 0 0;
+    background-size: 28.8462rem; //375px
+    display: inline-block;
+    &.sprite-news {
+        width: 1.7692rem; //23px
+        height: 1.5385rem; // 20px
+        background-position: 63.546% 15.517%;
+    }
+    &.sprite-arrow {
+        width: 0.7692rem; //10px
+        height: 0.7692rem; //10px
+        background-position: 38.577% 52.076%;
+    }
+}
+
+@each $dir in (top, right, bottom, left) {
+    .border-#{$dir} {
+        border-#{$dir}: 1px solid map-get($map: $colors, $key:'grey-1');
+    }
+}
